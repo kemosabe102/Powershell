@@ -2,7 +2,7 @@ param (
     $LastAccessedDate = (Get-Date).AddDays(-500),
     $RemoveAfterDate = (Get-Date).AddDays(-800),
     $ColdStorageLocation = "O:\BackUp",
-    $TopLevelDirectoriesThatCanBeArchived = ("D:\Downloads"),
+    $TopLevelDirectoriesThatCanBeChecked = ("D:\Downloads"),
     $PsModulePath = "../Modules"
 )
 
@@ -13,7 +13,7 @@ foreach ($Module in $PowerShellModules) {
 }
 
 # The archival process
-ForEach ($Dir in $TopLevelDirectoriesThatCanBeArchived)
+ForEach ($Dir in $TopLevelDirectoriesThatCanBeChecked)
 {
     $ArchivableFolders = Get-ChildItem $Dir
 
