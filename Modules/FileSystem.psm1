@@ -1,8 +1,8 @@
 function Archive-OldFolders {
     param (
-        $Source,
-        $Destination,
-        $FolderLastAccessed
+        [Parameter(Mandatory=$True)] [string]$Source,
+        [Parameter(Mandatory=$True)] [string]$Destination,
+        [Parameter(Mandatory=$True)] [datetime]$FolderLastAccessed
     )
 
     try {
@@ -20,8 +20,8 @@ function Archive-OldFolders {
 
 function Remove-OldFolders {
     param (
-        $Target,
-        $FolderLastAccessed
+        [Parameter(Mandatory=$True)] [string]$Target,
+        [Parameter(Mandatory=$True)] [datetime]$FolderLastAccessed
     )
 
     try {
