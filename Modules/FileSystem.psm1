@@ -2,13 +2,13 @@ function Archive-OldFolders {
     param (
         [Parameter(Mandatory=$True)] [string]$Source,
         [Parameter(Mandatory=$True)] [string]$Destination,
-        [Parameter(Mandatory=$True)] [datetime]$FolderLastAccessed
+        [Parameter(Mandatory=$True)] [datetime]$LastModified
     )
 
     try {
         $SourceFolderObject = Get-Item -Path $Source
 
-        If ($SourceFolderObject.LastAccessTime -lt $FolderLastAccessed)
+        If ($SourceFolderObject.LastWriteTime -lt $LastModified)
         {
             Robocopy "$Source" "$Destination" /MOVE /ZB /J /R:100 /MT:32 /FP /V
         }
@@ -18,16 +18,16 @@ function Archive-OldFolders {
     }
 }
 
-function Remove-OldFolders {
+ function Remove-OldFolders {
     param (
         [Parameter(Mandatory=$True)] [string]$Target,
-        [Parameter(Mandatory=$True)] [datetime]$FolderLastAccessed
+        [Parameter(Mandatory=$True)] [datetime]$LastModified
     )
 
     try {
         $TargetFolderObject = Get-Item -Path $Target
         
-        If ($TargetFolderObject.LastAccessTime -lt $FolderLastAccessed)
+        If ($TargetFolderObject.LastWriteTime -lt $LastModified)
         {
             $TargetFolderObject | Remove-Item -Recurse -Force
         }
