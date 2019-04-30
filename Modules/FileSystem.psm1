@@ -14,8 +14,9 @@ function Archive-OldFolders {
         }
     }
     catch {
-        Write-Error ('{0} : {1} At Line:{2} char:{3}' -f $_.InvocationInfo.ScriptName, $_.Exception.Message, $_.InvocationInfo.ScriptLineNumber, $_.InvocationInfo.OffsetInLine)
-    }
+        Write-Warning ('{0} : {1} At Line:{2} char:{3}' -f $_.InvocationInfo.ScriptName, $_.Exception.Message, $_.InvocationInfo.ScriptLineNumber, $_.InvocationInfo.OffsetInLine)
+        Write-Error "Failed to archive folders, see prior message."
+        }
 }
 
  function Remove-OldFolders {
@@ -33,6 +34,7 @@ function Archive-OldFolders {
         }
     }
     catch {
-        Write-Error ('{0} : {1} At Line:{2} char:{3}' -f $_.InvocationInfo.ScriptName, $_.Exception.Message, $_.InvocationInfo.ScriptLineNumber, $_.InvocationInfo.OffsetInLine)
-    }
+        Write-Warning ('{0} : {1} At Line:{2} char:{3}' -f $_.InvocationInfo.ScriptName, $_.Exception.Message, $_.InvocationInfo.ScriptLineNumber, $_.InvocationInfo.OffsetInLine)
+        Write-Error "Failed to remove folders, see prior message."
+        }
 }

@@ -31,7 +31,7 @@ ForEach ($Dir in $DirectoriesToCheck)
    }
 }
 
-$RarFiles = Get-ChildItem $ColdStorageLocation -Recurse -Filter *.r\d\d, 
+$RarFiles = Get-ChildItem $ColdStorageLocation -Recurse -Filter *.r\d\d,
 Select-String r\d\d -input $string -AllMatches
 
 Remove-OldFolders -Target $ColdStorageLocation -LastModified $RemoveAfterDate
