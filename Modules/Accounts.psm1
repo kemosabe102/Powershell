@@ -1,3 +1,5 @@
+Add-Type -AssemblyName System.DirectoryServices.AccountManagement
+
 function Validate-UserCredentials {
     param (
         [string] $Username,
@@ -7,20 +9,17 @@ function Validate-UserCredentials {
 
     foreach ($p in $PasswordsToTry)
     {
-        Add-Type -AssemblyName System.DirectoryServices.AccountManagement
-        $DS = New-Object System.DirectoryServices.AccountManagement.PrincipalContext('machine',$env:COMPUTERNAME)
-        $validateCreds = $DS.ValidateCredentials($Username, "$p")
+        $DS = New-Object System.DirectoryServices.AccountManagement.PrincipalContext('machine',$Hostname)
+        $validateCreds = $DS.ValidateCredentials($Username, $p)
         
         If ($validateCreds)
         {
-            Write-Output "Found it!!"
+            Write-Output "Found it!"
             $p
             Break
         }
-        else
-        {
-            Write-Output "Not it, keep guessing"
-        }
     }
+    
+    Write-Output "None of those worked, keep guessing"
 }
 
