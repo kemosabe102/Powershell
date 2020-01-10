@@ -1,4 +1,4 @@
-function Archive-OldFolders {
+function Archive-Folder {
     param (
         [Parameter(Mandatory=$True)] [string]$Source,
         [Parameter(Mandatory=$True)] [string]$Destination,
@@ -8,8 +8,7 @@ function Archive-OldFolders {
     try {
         $SourceFolderObject = Get-Item -Path $Source | Where-Object {$_.LastWriteTime -lt $LastModified}
 
-        If ($SourceFolderObject)
-        {
+        If ($SourceFolderObject) {
             Robocopy "$Source" "$Destination" /MOVE /ZB /J /R:100 /MT:32 /FP /V
         }
     }
@@ -18,7 +17,7 @@ function Archive-OldFolders {
     }
 }
 
- function Remove-OldFolders {
+ function Remove-Folder {
     param (
         [Parameter(Mandatory=$True)] [string]$Target,
         [Parameter(Mandatory=$True)] [datetime]$LastModified
@@ -33,14 +32,17 @@ function Archive-OldFolders {
     }
 }
 
-function Remove-OldFiles {
+function Remove-Files {
     param (
-        [Parameter(Mandatory=$True)] [string]$TargetDirectory,
+        [Parameter(Mandatory=$True)] [string]$Directory,
         [Parameter(Mandatory=$True)] [datetime]$LastModified
     )
 
     try {
-        $TargetFileObjects = Get-ChildItem -Path $TargetDirectory -Recurse -File | Where-Object {$_.LastWriteTime -lt $LastModified}
+        $TargetFileObjects = Get-ChildItem -Path $Directory -Recurse -File | Where-Object {$_.LastWriteTime -lt $LastModified}
+        Write-Output "Removing files from $Directory"
+        $TargetFileObjects.count
+        "Cleaning up {0:N2} GB" -f (($TargetFileObjects | Measure-Object Length -s).Sum /1GB)
         $TargetFileObjects | Remove-Item -Force
     }
     catch {

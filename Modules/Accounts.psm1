@@ -7,13 +7,11 @@ function Validate-UserCredentials {
         [string] $Hostname = ($env:COMPUTERNAME)
     )
 
-    foreach ($p in $PasswordsToTry)
-    {
+    foreach ($p in $PasswordsToTry) {
         $DS = New-Object System.DirectoryServices.AccountManagement.PrincipalContext('machine',$Hostname)
         $validateCreds = $DS.ValidateCredentials($Username, $p)
-        
-        If ($validateCreds)
-        {
+
+        If ($validateCreds) {
             Write-Output "Found it!"
             $p
             Break

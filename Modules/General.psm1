@@ -1,6 +1,6 @@
 function Get-Mutex {
     <#
-        EXAMPLE
+        .EXAMPLE
         $MutexId = 'MutexName'
         $mutex = Get-Mutex -MutexId $MutexId
         try
@@ -22,24 +22,20 @@ function Get-Mutex {
         [parameter(Mandatory = $true)][string] $MutexId
     )
 
-    Try
-    {
+    Try {
         $mutex = New-Object System.Threading.Mutex($false, $MutexId)
 
-        while (-not $mutex.WaitOne(4000))
-        {
+        while (-not $mutex.WaitOne(4000)) {
             Write-Verbose "Cannot start this task yet. There is already another task running that cannot be run in conjunction with this task. Please wait..."
         }
 
         Write-Verbose "Got mutex $MutexId"
         return $mutex
     }
-    Catch [System.Threading.AbandonedMutexException]
-    {
+    Catch [System.Threading.AbandonedMutexException] {
         return Get-Mutex $MutexId
     }
-    Catch [System.SystemException]
-    {
+    Catch [System.SystemException] {
         Write-Verbose "Get-Mutex had an issue, possibly because it was running without sufficient privileges to recover the mutex, $($_.Exception.Message)"
     }
 }
