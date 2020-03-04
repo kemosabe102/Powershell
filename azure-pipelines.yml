@@ -28,4 +28,9 @@ stages:
           - task: PublishTestResults@2
             inputs:
               testResultsFormat: 'NUnit'
+              testResultsFiles: '**\TEST-*.xml'
+
+          - task: PublishTestResults@2
+            inputs:
+              testResultsFormat: 'NUnit'
               testResultsFiles: '..\**\TEST-*.xml'
