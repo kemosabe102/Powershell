@@ -35,10 +35,10 @@ stages:
             inputs:
               testResultsFormat: 'NUnit'
               testResultsFiles: 'TEST-*.xml'
-              searchFolder: '$(System.SourcesDirectory)/TestResults/'
+              searchFolder: '$(Common.TestResultsDirectory)'
 
           - task: PublishTestResults@2
             inputs:
               testResultsFormat: 'NUnit'
               testResultsFiles: '**\TEST-*.xml'
-              searchFolder: '$(System.SourcesDirectory)'
+              searchFolder: '$(Build.SourcesDirectory)'
