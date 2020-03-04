@@ -25,6 +25,12 @@ stages:
               ItemSpec: '**\*.Tests.ps1'
               FailOnError: false
 
+          - task: PublishBuildArtifacts@1
+            displayName: 'Publish Artifact: powershell tests'
+            inputs:
+              pathToPublish: '$(System.DefaultWorkingDirectory)/../TestResults/'
+              artifactName: tests
+
           - task: PublishTestResults@2
             inputs:
               testResultsFormat: 'NUnit'
