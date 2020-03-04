@@ -22,10 +22,10 @@ stages:
           
           - task: Pester Powershell unittest@2
             inputs:
-              ItemSpec: '**/*.Tests.ps1'
+              ItemSpec: '**\*.Tests.ps1'
               FailOnError: false
 
           - task: PublishTestResults@2
             inputs:
               testResultsFormat: 'NUnit'
-              testResultsFiles: '**/TEST-*.xml'
+              testResultsFiles: '..\**\TEST-*.xml'
