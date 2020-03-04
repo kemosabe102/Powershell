@@ -9,16 +9,22 @@ trigger:
 pool:
   vmImage: 'windows-latest'
 
-steps:
-  - checkout: self
-    lfs: true
-    clean: true
+stages:
+  - stage: Build
+    displayName: Build
+    jobs:
+      - job: Main
+        timeoutInMinutes: 0 # Zero indicates infinite timeout
+        steps:
+          - checkout: self
+            lfs: true
+            clean: true
 
-  - task: Pester Powershell unittest@2
-    inputs:
-      ItemSpec: '*.tests.ps1'
-      FailOnError: false
-  - task: PublishTestResults@2
-    inputs:
-      testResultsFormat: 'NUnit'
-      testResultsFiles: '**/TEST-*.xml'
+          - task: Pester Powershell unittest@2
+            inputs:
+              ItemSpec: '*.tests.ps1'
+              FailOnError: false
+          - task: PublishTestResults@2
+            inputs:
+              testResultsFormat: 'NUnit'
+              testResultsFiles: '**/TEST-*.xml'
