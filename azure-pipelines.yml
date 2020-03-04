@@ -22,7 +22,7 @@ stages:
           
           - task: Pester Powershell unittest@2
             inputs:
-              ItemSpec: './dns/*.Tests.ps1'
+              ItemSpec: '**/*.Tests.ps1'
               FailOnError: false
 
           - task: PublishTestResults@2
