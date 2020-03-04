@@ -19,11 +19,12 @@ stages:
           - checkout: self
             lfs: true
             clean: true
-
+          
           - task: Pester Powershell unittest@2
             inputs:
-              ItemSpec: '*.tests.ps1'
+              ItemSpec: '$(System.DefaultWorkingDirectory)/dns/*.Tests.ps1'
               FailOnError: false
+
           - task: PublishTestResults@2
             inputs:
               testResultsFormat: 'NUnit'
